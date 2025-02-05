@@ -28,6 +28,8 @@ jobs:
       if: success() || failure()
       with:
         report_paths: '**/*.xml'
+        detailed_summary: true
+        flaky_summary: true
     - name: Check outputs
       if: success() || failure()
       run: |
