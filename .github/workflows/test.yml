@@ -12,3 +12,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Test
       run: swift test --xunit-output output.xml --parallel
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: output*.xml
