@@ -29,6 +29,7 @@ jobs:
       with:
         report_paths: '**/*.xml'
     - name: Check outputs
+      if: success() || failure()
       run: |
         echo "total: ${{ steps.publish-test-report.outputs.total }}"
         echo "passed: ${{ steps.publish-test-report.outputs.passed }}"
