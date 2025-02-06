@@ -53,6 +53,6 @@ jobs:
       env:
         HOMEBREW_NO_AUTO_UPDATE: 1
     - name: Echo failed result
-      if: ${{ steps.parse-html.outputs.failed_result }} != ""
+      if: (success() || failure()) && ${{ steps.parse-html.outputs.failed_result }} != ""
       run: |
         echo ${{ steps.parse-html.outputs.failed_result }}"
