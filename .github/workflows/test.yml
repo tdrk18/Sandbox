@@ -65,5 +65,5 @@ jobs:
     - name: Echo failed result
       if: ${{ hashFiles('failure_summary.txt') != '' }}
       run: |
-        result=`cat failure_summary.txt`
+        result="hogehoge: `cat failure_summary.txt`"
         echo $result
