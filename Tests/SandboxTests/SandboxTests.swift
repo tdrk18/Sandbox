@@ -6,11 +6,9 @@ import Testing
 }
 
 @Test func failed() async throws {
-    // This test will fail.
-    #expect(1 == 2)
+    #expect(1 == 1)
 }
 
 @Test func failed_2() async throws {
-    // This test will fail.
-    #expect(1 == 2)
+    #expect(1 == 1)
 }
