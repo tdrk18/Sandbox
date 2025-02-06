@@ -55,15 +55,10 @@ jobs:
       run: |
         cargo install htmlq
         result=`echo "${{ steps.publish-test-report.outputs.detailed_summary }}" | htmlq table tr td -t`
-        if [ -z "$result" ]; then
-          echo "No failed tests"
-        else
-          echo "Failed tests:"
-          echo $result
-          echo $result >> failure_summary.txt
-        fi
+        result="${result//$'\n'/'%0A'}"
+        echo "failed_result=$result" >> $GITHUB_OUTPUT
     - name: Echo failed result
-      if: ${{ hashFiles('failure_summary.txt') != '' }}
+      if: steps.parse-html.outputs.failed_result != ''
       run: |
-        result="hogehoge: `cat failure_summary.txt`"
+        result="hogehoge: `echo "${{ steps.parse-html.outputs.failed_result }}" | sed "s/'%0A'/\n/g"`"
         echo $result
