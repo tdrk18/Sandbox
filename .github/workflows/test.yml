@@ -23,16 +23,24 @@ jobs:
       with:
         name: test-results
         path: output*.xml
+
+  parse_result:
+    runs-on: ubuntu-latest
+    needs: test
+    if: success() || failure()
+    steps:
+    - name: Download test results
+      uses: actions/download-artifact@v4
+      with:
+        name: test-results
     - name: Publish Test Report
       id: publish-test-report
       uses: mikepenz/action-junit-report@v5
-      if: success() || failure()
       with:
         report_paths: '**/*.xml'
         detailed_summary: true
         flaky_summary: true
     - name: Check outputs
-      if: success() || failure()
       run: |
         echo "total: ${{ steps.publish-test-report.outputs.total }}"
         echo "passed: ${{ steps.publish-test-report.outputs.passed }}"
