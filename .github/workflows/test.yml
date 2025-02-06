@@ -41,3 +41,11 @@ jobs:
         echo "summary: ${{ steps.publish-test-report.outputs.summary }}"
         echo "detailed_summary: ${{ steps.publish-test-report.outputs.detailed_summary }}"
         echo "flaky_summary: ${{ steps.publish-test-report.outputs.flaky_summary }}"
+    - name: Parse HTML
+      if: success() || failure()
+      run: |
+        brew install htmlq
+        result=`echo "${{ steps.publish-test-report.outputs.detailed_summary }}" | htmlq table tr td -t`
+        echo "$result"
+      env:
+        HOMEBREW_NO_AUTO_UPDATE: 1
