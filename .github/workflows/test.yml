@@ -42,10 +42,15 @@ jobs:
         echo "detailed_summary: ${{ steps.publish-test-report.outputs.detailed_summary }}"
         echo "flaky_summary: ${{ steps.publish-test-report.outputs.flaky_summary }}"
     - name: Parse HTML
+      id: parse-html
       if: success() || failure()
       run: |
         brew install htmlq
         result=`echo "${{ steps.publish-test-report.outputs.detailed_summary }}" | htmlq table tr td -t`
-        echo "$result"
+        echo "failed_result=$result" >> $GITHUB_OUTPUT
       env:
         HOMEBREW_NO_AUTO_UPDATE: 1
+    - name: Echo failed result
+      if: ${{ steps.parse-html.outputs.failed_result }} != ""
+      run: |
+        echo ${{ steps.parse-html.outputs.failed_result }}"
