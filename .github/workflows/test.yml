@@ -47,6 +47,7 @@ jobs:
       run: |
         brew install htmlq
         result=`echo "${{ steps.publish-test-report.outputs.detailed_summary }}" | htmlq table tr td -t`
+        result="${result//$'\n'/'%0A'}"
         echo "failed_result=$result" >> $GITHUB_OUTPUT
       env:
         HOMEBREW_NO_AUTO_UPDATE: 1
