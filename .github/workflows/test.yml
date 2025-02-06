@@ -55,4 +55,4 @@ jobs:
     - name: Echo failed result
       if: success() || failure()
       run: |
-        echo ${{ steps.parse-html.outputs.failed_result }}"
+        echo "${{ steps.parse-html.outputs.failed_result }}"
