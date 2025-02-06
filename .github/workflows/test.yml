@@ -55,10 +55,9 @@ jobs:
       run: |
         cargo install htmlq
         result=`echo "${{ steps.publish-test-report.outputs.detailed_summary }}" | htmlq table tr td -t`
-        result="${result//$'\n'/'%0A'}"
-        echo "failed_result=$result" >> $GITHUB_OUTPUT
+        echo $result >> failure_summary.txt
     - name: Echo failed result
       if: steps.parse-html.outputs.failed_result != ''
       run: |
-        result=`echo "${{ steps.parse-html.outputs.failed_result }}" | sed "s/'%0A'/\n/g"`
+        result=`cat failure_summary.txt`
         echo $result
