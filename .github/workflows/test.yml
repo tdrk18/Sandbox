@@ -60,5 +60,5 @@ jobs:
     - name: Echo failed result
       if: steps.parse-html.outputs.failed_result != ''
       run: |
-        result="hogehoge: `echo "${{ steps.parse-html.outputs.failed_result }}" | sed "s/'%0A'/\n/g"`"
+        result="hogehoge: `echo "${{ steps.parse-html.outputs.failed_result }}" | sed "s/%0A/\n/g"`"
         echo $result
